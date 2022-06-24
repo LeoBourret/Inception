@@ -1,0 +1,70 @@
+version: '2.6'
+services:
+
+  mariadb:
+    environment:
+      - DATABASE=${DATABASE}
+      - USER=${USER}
+      - PASSWORD=${PASSWORD}
+      - ROOT_PASSWORD=${ROOT_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${ROOT_PASSWORD}
+    container_name: mariadb
+      #    build: mariadb
+    image: mariadb #:test
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - docker_network
+    ports:
+      - "3306:3306"
+    restart: always
+
+  wordpress:
+    environment:
+      - DATABASE=${DATABASE}
+      - USER=${USER}
+      - PASSWORD=${PASSWORD}
+      - HOSTNAME=${HOSTNAME}
+    container_name: wordpress
+      #build: wordpress
+    image: wordpress #:test
+    depends_on:
+      - mariadb
+    networks:
+      - docker_network
+    ports:
+      - "9000:9000"
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    restart: always
+
+  nginx:
+    container_name: nginx
+    build: nginx
+    image: nginx:test
+    depends_on :
+      - wordpress
+    networks:
+      - docker_network
+    ports:
+      - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html/wordpress
+    restart: always
+
+networks:
+  docker_network:
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/leo/data/mysql
+      o: bind
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/leo/data/wordpress
+      o: bind
