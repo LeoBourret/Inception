@@ -8,8 +8,11 @@ RUN apt-get update && apt-get -y install mariadb-server mariadb-client \
 # ensure that /var/run/mysqld (used for socket and lock files) is writable regardless of the UID our mysqld instance ends up having at runtime
 && chmod 777 /var/run/mysqld
 
-RUN service mysql start
 
 EXPOSE 3306
+
+COPY ./set_db.sh /usr/local/bin/
+
+ENTRYPOINT ["set_db.sh"]
 
 CMD ["mysqld", "--bind-address=0.0.0.0"]

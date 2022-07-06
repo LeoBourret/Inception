@@ -4,12 +4,12 @@ services:
   mariadb:
     environment:
       - DATABASE=${DATABASE}
-      - USER=${USER}
-      - PASSWORD=${PASSWORD}
-      - ROOT_PASSWORD=${ROOT_PASSWORD}
-      - MARIADB_ROOT_PASSWORD=${ROOT_PASSWORD}
+      - USER=${DB_USER}
+      - PASSWORD=${DB_USER_PASSWORD}
+      - ROOT_PASSWORD=${DB_ADMIN_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_ADMIN_PASSWORD}
     container_name: mariadb
-      #    build: mariadb
+    build: mariadb
     image: mariadb #:test
     volumes:
       - db_data:/var/lib/mysql
@@ -22,9 +22,9 @@ services:
   wordpress:
     environment:
       - DATABASE=${DATABASE}
-      - USER=${USER}
-      - PASSWORD=${PASSWORD}
-      - HOSTNAME=${HOSTNAME}
+      - USER=${DB_USER}
+      - PASSWORD=${DB_USER_PASSWORD}
+      - HOSTNAME=${DB_HOSTNAME}
     container_name: wordpress
       #build: wordpress
     image: wordpress #:test
@@ -60,11 +60,11 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/leo/data/mysql
+      device: /Users/lebourre/data/mysql
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/leo/data/wordpress
+      device: /Users/lebourre/data/wp
       o: bind
