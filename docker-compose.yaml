@@ -10,7 +10,7 @@ services:
       - MARIADB_ROOT_PASSWORD=${DB_ADMIN_PASSWORD}
     container_name: mariadb
     build: mariadb
-    image: mariadb #:test
+    image: mariadb:test
     volumes:
       - db_data:/var/lib/mysql
     networks:
@@ -26,8 +26,8 @@ services:
       - PASSWORD=${DB_USER_PASSWORD}
       - HOSTNAME=${DB_HOSTNAME}
     container_name: wordpress
-      #build: wordpress
-    image: wordpress #:test
+    build: wordpress
+    image: wordpress:test
     depends_on:
       - mariadb
     networks:

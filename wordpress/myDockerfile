@@ -7,7 +7,8 @@ php-cgi \
 php-mysql \
 php-fpm \
 php-pdo \
-php-gd php-cli \
+php-gd \
+php-cli \
 php-mbstring \
 mariadb-client
 
@@ -17,10 +18,7 @@ RUN sed -i 's/listen = \/run\/php\/php7\.3-fpm\.sock/listen = 0\.0\.0\.0:9000/g'
 
 EXPOSE 9000
 
-#CMD ["service", "php*", "status"]
-
 COPY ./install_wp.sh /usr/local/bin/
+ENTRYPOINT ["install_wp.sh"]
 
-ENTRYPOINT ["./usr/local/bin/install_wp.sh"]
-
-CMD ["/usr/sbin/php-fpm7.3", "-F"]
+CMD ["/usr/sbin/php-fpm", "-F"]
