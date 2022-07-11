@@ -3,10 +3,10 @@ all:
 	sudo mkdir -p /Users/lebourre/data/mysql
 	sudo mkdir -p /Users/lebourre/data/wp
 	sudo chmod -R 777 /Users/lebourre/data
-	docker compose up --build
+	docker compose -f srcs/docker-compose.yaml up --build
 
 clean:
-	docker compose down
+	docker compose -f srcs/docker-compose.yaml down
 	docker container prune
 	docker image prune
 	docker volume prune
