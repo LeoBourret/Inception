@@ -73,11 +73,11 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/lebourre/data/mysql
+      device: /home/lebourre/data/mysql
       o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /Users/lebourre/data/wp
+      device: /home/lebourre/data/wp
       o: bind
